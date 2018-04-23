@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>注册</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    
+    <!--  <link rel="stylesheet" href="http://res.wx.qq.com/open/libs/weui/0.4.0/weui.min.css"> -->
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/example.css"/>
+
+    <link rel="stylesheet" type="text/css" href="http://hovertree.com/texiao/mobile/5/hovertreebottom.css" media="all">
+    <style>
+
+
+        .an{
+            /*background-color: #e7e7e7;*/
+            color: #b7b7b7;
+
+        }
+
+        .weui-label{
+            font-weight: bold;
+        }
+
+        .message{
+            font-size: 12px;
+            color: #ff4711;
+        }
+
+
+		.green{
+			color:green
+		}
+
+    </style>
+</head>
+<body>
+
+<div class="page__hd">
+    <h1 class="page__title">点餐</h1>
+    <p class="page__desc">注册</p>
+</div>
+
+
+<div id="wl_content">
+
+    <validator name="validation" >
+        <form v-on:submit.prevent="wl_go()" >
+
+
+                <div class="weui-cells weui-cells_form">
+
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input"
+                                   required
+                                   v-model="name"
+                                    id="name"
+
+                                   placeholder="请输入用户名"/>
+                        </div>
+                        <p class="message" hidden>3到10位</p>
+                    </div>
+
+
+
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input"
+
+                                   id="password"
+                                   v-model="password" type="password" placeholder="请输入密码"
+                                   required
+                            />
+                        </div>
+                        <p class="message" hidden>最少6位</p>
+                    </div>
+
+                    <div class="weui-cell">
+                        <div class="weui-cell__hd"><label class="weui-label">确认密码</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input"
+                                   id="twopassword"
+                                   v-model="twopassword"  type="password" placeholder="请确认密码"
+
+                                   required
+                            />
+                        </div>
+                        <p class="message" hidden>两次密码不一样</p>
+
+                    </div>
+
+
+                    <div class="weui-cell weui-cell_select weui-cell_select-before">
+                        <div class="weui-cell__hd">
+                            <select class="weui-select" name="select2">
+                                <option value="1">+86</option>
+                                <option value="2">+80</option>
+                                <option value="3">+84</option>
+                                <option value="4">+87</option>
+                            </select>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" type="number" v-model="phone"  pattern="[0-9]*"
+
+                                    id="phone"
+
+                                   placeholder="请输入号码"
+                                   required
+                            />
+                        </div>
+                        <p class="message" hidden>请输入正确的手机号</p>
+                    </div>
+
+                    <div class="weui-cell weui-cell_vcode">
+                        <div class="weui-cell__hd">
+                            <label class="weui-label">验证码</label>
+                        </div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" v-model="session" type="tel" placeholder="请输入验证码"/>
+                        </div>
+                        <div class="weui-cell__ft " id="parentcode">
+                            <a href="javascript:" class="weui-vcode-btn green" style="color:green"  @click="set_code()" id="getcode"><span id="content">获取验证码</span></a>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="weui-btn-area">
+                    <button type="submit" class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</button>
+                </div>
+    </form>
+
+    </validator>
+
+</div>
+
+<!-- 网页底部导航栏 -->
+
+
+
+    <a href="javascript:;" class="weui-btn weui-btn_default" style="display: none" id="showToast">123</a>
+
+
+
+
+<div id="toast" style="display: none;">
+    <div class="weui-mask_transparent" ></div>
+    <div class="weui-toast" >
+
+
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <p class="weui-toast__content">验证码发送成功</p>
+    </div>
+</div>
+
+</body>
+
+
+<script src="js/zepto.min.js"></script>
+<script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+<script src="js/weui.min.js"></script>
+<script src="http://hovertree.com/texiao/mobile/5/hovertreebottom.js"></script>
+<script src="js/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/jquery-2.1.1.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.md5.js"></script>
+
+<script>
+    var sessionCode=10;
+    $(function () {
+
+        var $toast = $('#toast');
+        $('#showToast').on('click', function () {
+            if ($toast.css('display') != 'none') return;
+
+            $toast.fadeIn(100);
+            setTimeout(function () {
+                $toast.fadeOut(100);
+            }, 2000);
+        })
+
+
+            $("#name").blur(function () {
+            var str = $("#name").val();
+            var ret = /^\w{3,90}$/;
+            if(ret.test(str)){
+                $(this).parent().next().hide();
+            }else{
+
+                $(this).parent().next().show();
+
+
+            }
+        })
+
+
+        $("#password").blur(function () {
+            var str = $("#password").val();
+            var ret = /^\w{6,20}$/;
+            if(ret.test(str)){
+                $(this).parent().next().hide();
+            }else{
+
+                $(this).parent().next().show();
+
+
+            }
+        })
+
+        $("#twopassword").blur(function () {
+            if($("#password").val()!= $("#twopassword").val()){
+                $(this).parent().next().show();
+                return;
+            }else{
+             $(this).parent().next().hide();
+                
+            
+            }
+            var str = $("#twopassword").val();
+            var ret = /^\w{6,20}$/;
+            if(ret.test(str)){
+                $(this).parent().next().hide();
+            }else{
+
+                $(this).parent().next().show();
+
+
+            }
+        })
+
+
+        $("#phone").blur(function () {
+
+            var str = $("#phone").val();
+            var ret =/^1\d{9,10}$/;
+            if(ret.test(str)){
+                $(this).parent().next().hide();
+            }else{
+
+                $(this).parent().next().show();
+
+
+            }
+        })
+
+    })
+
+
+
+</script>
+<script type="text/javascript">
+        var app=new Vue({
+            el:"#wl_content",
+            data:{
+                "name":"",
+                "password":"",
+                "message":"",
+				"twopassword":"",
+                "phone":"",
+                "session":"",
+                "isok":"false",
+               
+                "isclick":false,
+                error:{
+                    name:true,password:true,twopassword:true,phone:true
+                }
+
+            },
+
+            methods:{
+
+                lan(phone,name,password){
+                     
+                    if(phone.length<11){
+
+                        console.log("这特么")
+                        return false;
+                    }else{
+                        
+                    }
+
+                    var ret = /^\w{6,20}$/;
+                    if(!ret.test(name)){
+                    	console.log("这特么")
+                        return false;
+                    }
+
+
+                    var ret = /^\w{6,20}$/;
+                    if(!ret.test(password)){
+                    console.log("这特么")
+                        return false;
+                    }
+                    
+                    
+                    
+                    var  temp=$("#twopassword").val();
+                    if(password!=temp){
+                    	console.log("这特么")
+					console.log(password);
+                        return false;
+                    }
+                    
+                },
+                wl_go(){
+				//这是没有发送的验证码的就开始哈喽毕的
+                	if(this.isclick==false){
+                		 $(".weui-toast__content").html("你可能需要先发一个验证码!");
+                         $("#showToast").click();
+                		return;
+                		
+                	}
+                	
+                	
+                    var zhi= this.$options.methods.lan(this.phone,this.name,this.password,this.twopassword);
+                    console.log(zhi);
+                    if(zhi==false){
+                        $(".message").show();
+                        return;
+
+                    }
+                   
+//                alert(1);
+                    if(this.session!=sessionCode){
+                        $(".weui-toast__content").html("验证码不对!");
+                        $("#showToast").click();
+                        return;
+                    }
+                    if(this.name=="" || this.password=="" ||this.twopassword=="" || this.phone==""){
+                        $(".weui-toast__content").html("请填写信息!");
+                        $("#showToast").click();
+                        return;
+                    }
+
+                    
+                    let data={"name":this.name,"password":this.password,"phone":this.phone};
+                    this.password=$.md5(this.password);
+                    console.log(data);
+//                     return;
+                    axios.post("RegistServlet?opr=register&phoneNo="+this.phone+"&username="+this.name+"&pwd="+this.password).then(response=>{
+                    	console.log(response)
+                    	
+                    	if(response.data.status==1){
+                            location.href="message.html?message=1";
+                      		  }else if(response.data.status==0){
+                        //登陆失败弹出狂战
+                        	 $(".weui-toast__content").html("账号已经存在!");
+                            $("#showToast").click();
+                            this.password="";
+                       	 }else{
+                       		$(".weui-toast__content").html("注册失败!");
+                            $("#showToast").click();
+                            this.password="";
+                       		 
+                       		 
+                       	 }
+                    	
+                    	
+                    })
+                    
+                   
+                    
+                },
+                
+                set_code(){
+
+			if(this.isok==true){
+			return;
+			}
+			console.log(this.phone);
+                if(this.phone==""){
+                    $(".weui-toast__content").html("请输入手机号码!");
+                    $("#showToast").click();
+                    return;
+                }
+
+				let data={"phone":this.phone};
+               
+               this.isok=true;
+               $("#getcode").css("color","#b7b7b7")
+					
+ 					axios.get("RegistServlet?opr=setcode&phone="+this.phone).then(response=>{
+					console.log(response);
+					var code=response.data.code;
+					sessionCode=code;
+					console.log(sessionCode);
+                    $("#showToast").click();
+                    $(".weui-toast__content").html("验证码发送成功!");
+                    var timelong = 60;
+                    this.isclick=true;
+                    $("#getcode").addClass("an");
+                    var time = setInterval(function () {
+                        timelong--;
+                        $("#content").html(timelong+"秒后重试");
+                        $("#getcode").attr("disabled","true");
+                        if(timelong<2){
+                            clearInterval(time);
+                            $("#getcode").attr("disabled","false");
+                            $("#getcode").removeClass("an");
+                            $("#content").html("获取验证码");
+                            $("#getcode").css("color","green");
+                            this.isok=false;
+                        }
+
+                    }, 1000)
+
+
+                })
+
+
+
+            }
+                
+                
+            },
+
+
+
+
+            
+
+        })
+
+</script>
+
+
+
+</html>

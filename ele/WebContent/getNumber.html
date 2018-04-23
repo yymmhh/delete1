@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>取号</title>
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/example.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <style>
+    	 .btn-circle {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+    
+    
+    </style>
+    
+</head>
+<body>
+
+<div class="weui-msg" id="fuck_vue">
+
+    <div class="weui-msg__icon-area"><i class="weui-icon-waiting weui-icon_msg"></i></div>
+
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">点击取号</h2>
+        <p class="weui-msg__desc" >在你前面还有<span id="time">{{Waitpeople}}</span>个人</p>
+    </div>
+    <div class="weui-msg__opr-area">
+
+        <div v-if="Number"><span>您的号码</span> <h1>{{Number}}</h1></div>
+
+
+        <p class="weui-btn-area">
+            <a href="javascript:;" id="showIOSActionSheet" v-if="Number ==''" @click="getNum()" class="weui-btn weui-btn_primary">取号</a>
+
+            <p href="javascript:;" v-if="Number !=''" class="weui-btn weui-btn_default weui-btn_loading"><i class="weui-loading"></i>请等待</p>
+        </p>
+    	</div>
+    
+    <div class="page__bd page__bd_spacing">
+<!--         <a href="javascript:;" class="weui-btn weui-btn_default" id="showIOSActionSheet">iOS ActionSheet</a> -->
+        
+    </div>
+
+    
+    <!--     公共框子 -->
+     <div class="weui-mask" id="iosMask" style="display: none"></div>
+        <div class="weui-actionsheet" id="iosActionsheet">
+            <div class="weui-actionsheet__title">
+                <p class="weui-actionsheet__title-text">请选择就餐人数</p>
+            </div>
+            <div class="weui-actionsheet__menu">
+<!--                 <div class="weui-actionsheet__cell" @click="check_num(2)">2人</div> -->
+									<button type="button"  @click="jian()"   class="btn btn-default btn-circle  text-uc my-btn wl_goshop_jian1"><i class="glyphicon glyphicon-minus"></i></button>
+		                            <input red type="text" class="wl_shop_num" style="width: 20px"  v-bind:value="people"  >
+		                            <button type="button"  @click="jia()" class="btn btn-default btn-circle  my-btn wl_goshop_jia1"><i class="glyphicon glyphicon-plus"></i></button>
+                
+                <div class="weui-actionsheet__cell" @click="wl_go()" style="margin-top:50px;">确认取号</div>
+            </div>
+            <div class="weui-actionsheet__action">
+                <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+            </div>
+        </div>
+        
+<!--         结束 -->
+    
+    
+    
+    
+<!--    保护fuck_vue  -->
+    </div>
+
+<!--    保护fuck_vue  -->
+<script>
+
+
+
+</script>
+
+</body>
+<script src="js/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+// $iosMask.on('click', hideActionSheet);
+// $('#iosActionsheetCancel').on('click', hideActionSheet);
+
+$(function(){
+	
+	$('input:text').attr("readonly","readonly")
+	
+    var $iosActionsheet = $('#iosActionsheet');
+    var $iosMask = $('#iosMask');
+    function hideActionSheet() {
+        $iosActionsheet.removeClass('weui-actionsheet_toggle');
+        $iosMask.fadeOut(200);
+    }
+
+    $iosMask.on('click', hideActionSheet);
+    $('#iosActionsheetCancel').on('click', hideActionSheet);
+	
+	$("#showIOSActionSheet").on("click", function(){
+	    $iosActionsheet.addClass('weui-actionsheet_toggle');
+	    $iosMask.fadeIn(200);
+	});	
+	
+})
+
+
+</script>
+<script>
+
+    new Vue({
+        el:"#fuck_vue",
+        data:{
+            "Number":"",
+            "Waitpeople":"1",
+            "people":1,
+            "user_id":"-10"
+        },
+        methods:{
+
+            getNum(){
+
+//                一个Ajax 取票
+
+//                 axios.get("url").then(response=>{
+//                     this.Number=response;
+//                 })
+            },
+            //选择多少人就餐的
+            check_num(item){
+            	
+            	console.log(item);
+            },
+            
+            jia(){
+            	
+            	if(this.people>13){
+            		return;
+            	}
+            	this.people=parseInt(this.people)+1;
+            	console.log(this.people);
+            	
+            },
+            jian(){
+            	if(this.people<=1){
+            		return;
+            	}
+        
+            	this.people=parseInt(this.people)-1;
+            },
+            wl_go(){
+            	var boardType = 0;
+        		if (this.people <= 2) {
+        			boardType = 1;
+        		}else if (this.people > 2 && this.people <= 4) {
+        			boardType = 2;
+        		}else if (this.people > 4 && this.people <= 8) {
+        			boardType = 3;
+        		}else if (this.people > 8 && this.people <= 14) {
+        			boardType = 4;
+        		}
+            	
+            	
+            	let data={"people":this.people,"user":this.user_id,"boardType":boardType}
+            	axios.post("GetNumServlet?boardType="+boardType+"&waitEatCount="+this.people).then(response=>{
+            		console.log(response);	
+            		this.Number=response.data.num;
+            		$('#iosActionsheetCancel').click();
+            		
+            	})
+            	
+            }
+
+        },
+        mounted(){
+        	
+        	
+        	
+        	
+        	//先获取一个用户的Session
+        	//如果没有存的话就跳到登陆页面
+        axios.post("LoginServlet?type=getSession").then(response=>{
+        		var user_id=response.data.user_id;
+        		console.log(user_id);
+        		if(user_id==null || user_id==0 ||user_id<1){
+        			return;
+        			
+        		}else{
+        			
+        			axios.post("UserServlet?opr=getInfo&user_id="+user_id).then(eve=>{
+        				console.log(eve.data.info);
+        				var data=eve.data.info;
+        				var img1=data.user_photo;
+        				img1= img1.substring(1);
+        				 var temp={phone:data.user_phoneNo,img:img1,name:data.user_name};
+        				 this.userinfo=temp;
+        				
+        			})
+        		}		
+        			
+        	}).catch(function(error){
+        		
+        		location.href="error.html?message=1";
+			    console.log(error);
+			    return;
+        	})
+            //每隔一秒发一个请求看还有多少个人取票
+//             setInterval(function () {
+//                 axios.get("url").then(response=>{
+//                     this.people=response;
+//                 })
+//             },1000)
+        }
+
+
+
+
+
+    })
+
+
+</script>
+</html>

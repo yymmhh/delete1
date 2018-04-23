@@ -1,0 +1,307 @@
+
+<html>
+<head>
+	<title></title>
+	
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+	<script type="text/javascript" src="./js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="./js/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+</head>
+<body>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Yii点餐</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+        <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
+		<link href="css/amazeui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/loading.css" />
+		<link rel="stylesheet" href="css/loaders.min.css" />
+		
+		<script src="js/time.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/wl_index.css">
+		
+		<script type="text/javascript">
+			$(window).load(function(){
+				$(".loading").addClass("loader-chanage")
+				$(".loading").fadeOut(500)
+			})
+		</script>
+	</head>
+	<body>
+	<div class="loading">
+	<div class="loader">
+        <div class="loader-inner pacman">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+	</div>
+</div>
+<!--图片轮换-->
+<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0" style="position: relative;">
+	<header data-am-widget="header" class="am-header am-header-default tm-head sortbar-fixed wl_index_head" id="shortbar" >
+			<!--<div class="am-header-left am-header-nav">
+		        <a href="city.html" class="">
+			        <img src="images/city.png" />
+			        <p style="font-size: 12px; margin-top: -35px;">南昌</p>
+			    </a>
+		   </div>-->
+			<h1 class="am-header-title1">
+		        <div class="search-box">
+		           <input type="text"  name="title" class="index-search wl_souce" placeholder="寻找你喜欢的商品......" />
+		           <input type="submit" value="" class="search-icon" /> 
+		        </div>
+		    </h1>
+			<!--<div class="am-header-right am-header-nav">
+			    
+			    <a href="" class="">
+		           <img src="images/sao.png" />
+		           <p style="font-size: 12px; margin-top: -35px;">扫一扫</p>
+		        </a>
+			</div>-->
+        </header>
+  <ul class="am-slides">
+    <li><img src="images/banner1.png" /></li>
+    <li><img src="images/banner1.png" /></li>
+    <li><img src="images/banner1.png" /></li>
+    <li><img src="images/banner1.png" /></li>
+  </ul>
+</div>
+<!--导航-->
+ <ul class="sq-nav"  >
+<!--       <li> -->
+<!--         <div class="am-gallery-item"> -->
+<!--             <a href="goShop.html" class=""> -->
+<!--               <img src="images/index_001.png" /> -->
+<!--               <p>新品</p> -->
+<!--             </a> -->
+<!--         </div> -->
+<!--       </li> -->
+<!--       <li> -->
+<!--         <div class="am-gallery-item"> -->
+<!--             <a href="goShop.html" class=""> -->
+<!--               <img src="images/index_002.png" /> -->
+<!--               <p>特价</p> -->
+<!--             </a> -->
+<!--         </div> -->
+<!--       </li> -->
+<!--       <li> -->
+<!--         <div class="am-gallery-item"> -->
+<!--             <a href="goShop.html" class=""> -->
+<!--               <img src="images/index_003.png" /> -->
+<!--               <p>预定</p> -->
+<!--             </a> -->
+<!--         </div> -->
+<!--       </li> -->
+<!--       <li> -->
+<!--         <div class="am-gallery-item"> -->
+<!--             <a href="goShop.html" class=""> -->
+<!--               <img src="images/index_004.png" /> -->
+<!--               <p>积分</p> -->
+<!--             </a> -->
+<!--         </div> -->
+<!--       </li> -->
+<!--       <li> -->
+<!--         <div class="am-gallery-item"> -->
+<!--             <a href="goShop.html" class=""> -->
+<!--               <img src="images/index_005.png" /> -->
+<!--               <p>众筹</p> -->
+<!--             </a> -->
+<!--         </div> -->
+<!--       </li> -->
+<!--       <li> -->
+<!--         <div class="am-gallery-item"> -->
+<!--             <a href="goShop.html" class=""> -->
+<!--               <img src="images/index_006.png" /> -->
+<!--               <p>白条</p> -->
+<!--             </a> -->
+<!--         </div> -->
+<!--       </li> -->
+<!--       <li> -->
+<!--         <div class="am-gallery-item"> -->
+<!--             <a href="goShop.html" class=""> -->
+<!--               <img src="images/index_007.png" /> -->
+<!--               <p>头条</p> -->
+<!--             </a> -->
+<!--         </div> -->
+<!--       </li> -->
+      <li>
+        <div class="am-gallery-item">
+            <a href="goShop.html" class="">
+              <img src="images/index_008.png" />
+              <p>开始点餐</p>
+            </a>
+        </div>
+      </li>
+  </ul>
+
+ <!-- 特色专区-->
+  <div class="sq-title">
+ 	<img src="images/ts.png" width="24"/>
+ 	特色专区
+ </div>
+  <div class="whitebar">
+			      <div class="am-tabs-bd">
+			          <div data-tab-panel-0 class="am-tab-panel am-active">
+                         <ul data-am-widget="gallery" class="am-gallery special am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" >
+						      <li>
+						        <div class="am-gallery-item">
+						            <a href="goShop.html" class="">
+						              <img   width="200px" height="200px" class="wl_img_size" src="images/u=3740651813,1771269363&fm=27&gp=0.jpg"/>
+						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
+	                                    <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
+						            </a>
+						        </div>
+						      </li>
+						      <li>
+						        <div class="am-gallery-item">
+						            <a href="goShop.html" class="">
+						              <img  class="wl_img_size" src="images/u=611116088,4106962857&fm=27&gp=0.jpg"/>
+						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
+						                <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
+						            </a>
+						        </div>
+						      </li>
+						      <li>
+						        <div class="am-gallery-item">
+						            <a href="goShop.html" class="">
+						              <img src="images/u=611116088,4106962857&fm=27&gp=0.jpg"/>
+						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
+	                                    <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
+						            </a>
+						        </div>
+						      </li>
+						      <li>
+						        <div class="am-gallery-item">
+						            <a href="goShop.html" class="">
+						              <img src="images/u=611116088,4106962857&fm=27&gp=0.jpg"/>
+						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
+						                <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
+						            </a>
+						        </div>
+						      </li>
+						 </ul>
+			          </div>
+			    
+            </div>
+           
+	   </div>
+ <!--底部-->
+ <div style="height: 55px;"></div>
+ <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
+      <ul class="am-navbar-nav am-cf am-avg-sm-4">   
+          <li>
+            <a href="index.html" class="curr">
+                <span><img src="images/home.png"/></span>
+                <span class="am-navbar-label ha">首页</span>
+            </a>
+          </li>
+          <li>
+            <a href="getNumber.html" class="">
+                <span><img src="images/classify.png"/></span>
+                <span class="am-navbar-label">取号</span>
+            </a>
+          </li>
+       
+          <li>
+            <a href="goShop.html" class="">
+                <span><img src="images/cart.png"/></span>
+                <span class="am-navbar-label">购物车</span>
+            </a>
+          </li>
+          <li>
+            <a href="UserInfo.html" class="">
+                <span><img src="images/me.png"/></span>
+                <span class="am-navbar-label">我的</span>
+            </a>
+          </li>
+      </ul>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+<script src="js/jquery.min.js"></script>
+<script src="js/amazeui.min.js"></script>
+	</body>
+</html>
+
+</body>
+<script type="text/javascript">
+	var arr="c++";
+	this
+
+	new Vue({
+		el:"#app",
+		data:{
+		title:arr,
+		list:[
+		{id:1,title:"周彩"},
+		{id:1,title:"鲁本"},
+		{id:1,title:"11"},
+		{id:1,title:"问问"}
+
+		],
+		todo:{id:0,title:null}
+
+		},
+		 methods:{
+    wlindex(titie){
+
+      // this.todo.title=titie;
+      // console.log(this.todo.title);
+      // this.list.push(this.todo);
+      // this.todo={id:0,title:null}
+
+   //    	axios.get('http://www.weather.com.cn/data/sk/101010100.html')
+  	// 	.then(function (response) {
+   //  			console.log(response);
+  	// })
+  	// .catch(function (error) {
+   //  console.log(error);
+ 	 // });
+ 	 // 
+
+
+
+ 	 	// $.ajax({
+ 	 	// 	url:"http://www.weather.com.cn/data/sk/101010100.html",
+ 	 	// 	type:"get",
+ 	 	// 	dataType:"json",
+ 	 	// 	success:function(eve){
+ 	 	// 		console.log(eve)
+ 	 	// 	}
+
+
+ 	 	// })
+
+
+
+
+    },
+    
+  
+  },
+
+
+
+	})
+	</script>
+</html>

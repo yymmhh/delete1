@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人中心</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
+    <link href="css/amazeui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body style="background: #f6f6f6;" id="body">
+<header style="background-color: #0c80ba" data-am-widget="header" class="am-header am-header-default sq-head ">
+    <h1 class="am-header-title">
+        <a href="" class="">个人中心</a>
+    </h1>
+</header>
+    <div id="fuck_vue">
+
+
+<div style="height: 49px;"></div>
+<div class="member">
+    <div class="mem-tit">{{userinfo.phone}}
+        <!--<a href="step.html" class="step"><img src="images/step.png" width="26"/></a>-->
+    </div>
+    <div class="mem-pic">
+        <div class="mem-pic-bg"><img v-bind:src="'http://tp.wlphp.cn'+userinfo.img"  width="97px;" height="97px" style="border-radius:50%;"></div>
+    </div>
+</div>
+<div class="user-list">
+    <div class="u-list-main">
+        <img src="images/order-pic.png" width="27" />
+        <span>我的订单</span>
+        <a href="shopOrder.html">查看全部订单></a>
+    </div>
+    <!--<ul class="user-nav">-->
+        <!--<li><a href="allorder.html"> <img src="images/1-icon.png"> <p>待提交</p></a></li>-->
+        <!--<li><a href="allorder.html"> <img src="images/1-icon.png"> <p>已提交</p></a></li>-->
+        <!--<li><a href="allorder.html"> <img src="images/1-icon1.png"> <p>待发货</p></a></li>-->
+        <!--<li><a href="allorder.html"> <img src="images/1-icon2.png"> <p>待评价</p></a></li>-->
+    <!--</ul>-->
+    <!--<div class="u-list-main">-->
+        <!--<img src="images/1-icon5.png" width="27" />-->
+        <!--<span>我的地址</span>-->
+    <!--</div>-->
+    <div class="u-list-main">
+        <img src="images/3icon2.png" width="27" />
+        <span>我的收藏</span>
+    </div>
+    <div class="u-list-main">
+        <img src="images/3icon2.png" width="27" />
+            <span>联系店家</span>
+    </div>
+
+
+    <div class="u-list-main">
+        <img src="images/3icon2.png" width="27" />
+        <span><a href="userinfoChange.html">修改信息</a></span>
+    </div>
+</div>
+<!--底部-->
+<div style="height: 55px;"></div>
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4">
+        <li>
+            <a href="index.html">
+                <span><img src="images/hom.png"/></span>
+                <span class="am-navbar-label">首页</span>
+            </a>
+        </li>
+        <li>
+            <a href="getNumber.html" class="">
+                <span ><img src="images/classify.png"/></span>
+                <span class="am-navbar-label">取号</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="goShop.html" class="">
+                <span ><img src="images/cart.png"/></span>
+                <span class="am-navbar-label">购物车</span>
+            </a>
+        </li>
+        <li>
+            <a href="login.html" class="curr">
+                <span ><img src="images/My.png"/></span>
+                <span class="am-navbar-label">我的</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+        <!--结尾Vue-->
+    </div>
+
+
+
+
+
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/amazeui.min.js"></script>
+<script>
+
+
+    var app=new Vue({
+        el:"#fuck_vue",
+        
+        data:{
+            userinfo:{phone:"15078921546",img:"images/1.jpg"},
+
+
+
+        },
+        
+        mounted() {
+        	
+        	//先获取一个用户的Session
+        	//如果没有存的话就跳到登陆页面
+        	axios.post("LoginServlet?type=getSession").then(response=>{
+        		var user_id=response.data.user_id;
+        		console.log(user_id);
+        		if(user_id==null || user_id==0 ||user_id<1){
+        			return;
+        			
+        		}else{
+        			
+        			axios.post("UserServlet?opr=getInfo&user_id="+user_id).then(eve=>{
+        				console.log(eve.data.info);
+        				var data=eve.data.info;
+        				var img1=data.user_photo;
+        				img1= img1.substring(1);
+        				 var temp={phone:data.user_phoneNo,img:img1,name:data.user_name};
+        				 this.userinfo=temp;
+        				
+        			})
+        		}
+        		
+//         		if(response.status==0){
+//         			location.href="login.html";
+        			
+//         		}else{
+//         			console.log(response);
+        			
+//         			this.userinfo=response.name;
+//         			this.userinfo=response.img;
+//         		}
+        			
+        			
+        	}).catch(function (error) {
+				location.href="error.html?message=1";
+			    console.log(error);
+			    return;
+			  });
+        
+        }
+
+
+
+
+    })
+
+
+
+</script>
+
+</html>

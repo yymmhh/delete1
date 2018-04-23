@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>评论</title>
+	<meta charset="utf-8">
+		<meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+	  <link rel="stylesheet" href="./css/weui.css"/>
+    <link rel="stylesheet" href="./css/example.css"/>
+
+	<!--<link rel="icon" type="image/png" href="/theme/default/images/favicon.png">-->
+		<link href="css/amazeui.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/loading.css" />
+		<link rel="stylesheet" href="css/loaders.min.css" />
+		<link rel="stylesheet" type="text/css" href="./css/wl_comment.css">
+			<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+
+			<header class="page__bd">
+						<div class="weui-panel weui-panel_access">
+			            <!-- <div class="weui-panel__hd">图文组合列表</div> -->
+			            <div class="weui-panel__bd wl_goshop_header">
+			                <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+			                    <div class="weui-media-box__hd wl_goshop_logo">
+			                        <img class="" src="./images/u=2870610447,1092635694&fm=58&bpow=839&bpoh=839.jpg" alt="">
+			                    </div>
+			                    <div class="weui-media-box__bd wl_goshop_title">
+			                        <h3 class="">必胜客(新街口店)</h3>
+			                        <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+			                    </div>
+			              			  </a>
+			                
+			          			  </div>
+			          
+			       			 </div>
+			    		</div>
+
+  			</header>
+
+
+<!-- 隔板 -->
+
+		   <section  class="page__bd"  style="height: 100%;">
+		        <div class="weui-tab">
+		            <div class="weui-navbar" id="wl_nav">
+		                <div class="weui-navbar__item weui-bar__item_on">
+		                    <p id="wl_goshop_title"><a href="goShop.html">点餐</a></p>
+		                </div>
+		                <div class="weui-navbar__item">
+		                    评价
+		                </div>
+		                <div class="weui-navbar__item">
+		                   <!--<span style="font-size: 40px"-->
+		                         <!--class="cart glyphicon glyphicon-shopping-cart"></span>-->
+		                </div>
+		            </div>
+		            <div class="weui-tab__panel" id="fuck_vue">
+		<!-- 一下是评论的内容 -->
+
+							
+					<div class="container-fluid" style="margin-top: 10px">
+						<div class="row-fluid">
+							<div class="span12">
+								<ul class="thumbnails">
+									
+									<li class="span4" v-for="item in comment">
+
+										<div class="thumbnail">
+											<div class="weui-media-box__hd" >
+					                        <img class="" width="30px" v-bind:src="'http://tp.wlphp.cn'+item.peopleImg" alt="">
+					                        <span>{{item.name}}</span>
+					                    </div>
+
+											<div class="caption">
+
+											
+												<p>
+													{{item.content}}
+													
+												</p>
+												<img  v-if="item.isshow" width="90px" height="90px"
+													v-bind:src="'http://tp.wlphp.cn'+item.comimg" @click="commentImg(item)"
+												  />
+												
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+
+
+	<!-- 模态框（Modal） -->
+				<div class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog" style="background-color: black;margin-top: 150px;">
+						<div class="modal-content" style="background-color: black">
+							<div class="modal-header">
+								<h1>{{img.img}}</h1>
+								<img v-bind:src="img.img" 
+									style="width: 300px;height: 200px;" 
+								>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal -->
+				</div>	
+			</div>
+            <!-- 以上是评论的内容 -->
+		            </div>
+		        </div>
+		  </section>  
+
+
+
+
+
+<!-- 分割搬 -->
+		  <section style="display: none">
+		<!-- 这个当然是隐藏得按钮啦 -->
+
+					<button   id="an" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+						
+					</button>
+
+
+
+		  </section>
+
+
+
+
+</body>
+<script type="text/javascript">
+
+
+var comimg="";
+	  var url = location.search; //获取url中"?"符后的字串  
+   var theRequest = new Object();  
+   if (url.indexOf("?") != -1) {  
+      var str = url.substr(1);  
+      strs = str.split("&");  
+      for(var i = 0; i < strs.length; i ++) {  
+         theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);  
+      }  
+   }  
+
+   url=theRequest.id;
+   console.log(url);
+
+		var app=new  Vue({
+			el:"#fuck_vue",
+			
+			data:{
+				
+				title:"Vue",
+				comment:[
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+				{"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+				"content":"123","comimg":"images/infortx.png"},
+
+				],
+				img:{img:"123"}
+				},
+				mounted() {
+			    axios.get('CommentServlet?opr=find').then((response) => {
+			        console.log(response.data.info);
+			        var last=new Array();
+			        var arr=response.data.info;
+			        var temp={"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+							"content":"123","comimg":"images/infortx.png"};
+			        arr.forEach(function(item,index){
+			        	console.log(item);
+			        	var isshow=false;
+			        	if(item.picSrc.length>10){
+			        		isshow=true;
+			        	}
+			       
+			        	temp={"id":item.id,"name":item.userInfo.user_name,
+			        			"peopleImg":item.userInfo.user_photo,
+								"content":item.assess,"comimg":item.picSrc,"isshow":isshow};
+			        	last.push(temp);
+			        	
+			        	temp={"id":"1","name":"李辉","peopleImg":"images/infortx.png",
+								"content":"123","comimg":"images/infortx.png"};
+			        	
+			        })
+			        console.log(last);
+			        this.comment=last;
+			      
+			      
+			    })
+			   
+			   },
+			   methods:{
+					commentImg(data){
+						// console.log(data);
+						this.img={"img":data.comimg};
+						
+						
+						console.log(this.img);
+						$("#an").click();
+
+					}
+
+			   }
+			  
+
+			
+
+
+
+		})
+
+		
+
+
+		
+
+</script>
+
+<script type="text/javascript">
+
+ 
+ 
+   // alert(theRequest);  
+
+ 
+
+
+</script>
+</html>

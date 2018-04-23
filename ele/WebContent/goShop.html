@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/weui.css"/>
+    <link rel="stylesheet" href="./css/example.css"/>
+
+    <!--<link rel="icon" type="image/png" href="/theme/default/images/favicon.png">-->
+    <link href="css/amazeui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/loading.css" />
+    <link rel="stylesheet" href="css/loaders.min.css" />
+
+    <!-- <script src="js/time.js"></script> -->
+
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script src="js/axios.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./css/wl_index.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <style type="text/css">
+        body {
+            position: relative;
+        }
+        ul.nav-pills {
+            /*	top: 20px;
+                position: fixed;*/
+        }
+        div.col-sm-9 div {
+            /*height: 250px;*/
+            font-size: 28px;
+        }
+        /*#section1 {color: #fff; background-color: #1E88E5;}
+        #section2 {color: #fff; background-color: #673ab7;}
+        #section3 {color: #fff; background-color: #ff9800;}
+        #section41 {color: #fff; background-color: #00bcd4;}
+        #section42 {color: #fff; background-color: #009688;}*/
+
+        @media screen and (max-width: 810px) {
+            #section0,#section1, #section2, #section3, #section4
+            , #section5, #section6, #section7, #section8, #section9  {
+                margin-left: 150px;
+            }
+        }
+        /*body{margin:40px;}*/
+
+
+        .btn-circle {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.428571429;
+            border-radius: 15px;
+        }
+
+
+
+
+        #one{
+            top: 400px;
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+<!--<div id="vue">-->
+<!-- 头部 -->
+
+<div class="page__bd">
+    <div class="weui-panel weui-panel_access">
+        <!-- <div class="weui-panel__hd">图文组合列表</div> -->
+        <div class="weui-panel__bd wl_goshop_header">
+            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd wl_goshop_logo">
+                    <img class="" src="./images/1.jpg" alt="">
+                </div>
+                <div class="weui-media-box__bd wl_goshop_title">
+                    <h3 class="">糊世刺身丹凤街店</h3>
+                    <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+                </div>
+            </a>
+
+        </div>
+
+    </div>
+    <div  class="items"  id="wl_goshop_tiao" style="margin-left: 300px;display: none;">
+
+        <div class="thumb-holder">
+            <img src="images/blue.png" width="50px" alt="iPhone" />
+        </div>
+
+        <button id="an" class="button text-uc my-btn" type="button">
+
+            Add to cart
+        </button>
+
+    </div>
+    <!-- 到腰了 -->
+    <div class="page__bd"  style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-navbar" id="wl_nav">
+                <div class="weui-navbar__item weui-bar__item_on">
+                    <p id="wl_goshop_title">点餐</p>
+                </div>
+                <div class="weui-navbar__item">
+                   	<a href="Shopcomment.html"> 评价</a>
+                </div>
+                <div class="weui-navbar__item">
+                    <!--<span style="font-size: 40px"-->
+                    <!--class="cart glyphicon glyphicon-shopping-cart"></span>-->
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <p style="height: 10px ;background-color: red"></p> -->
+    <!-- 这是底下的导航了 -->
+    <div class="wl_goshop_left">
+        <!-- //左边的栏目 -->
+        <div id="fuck_vue">
+            <!-- 购物车模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                已点菜品
+                            </h4>
+                        </div>
+                        <div class="modal-body" v-for="(item,index) in cart">
+
+
+                            <!--申林要家的+- -->
+<div>
+    <span style="border: 0px solid red;width: 140px;display: inline-block">{{item.name}}×{{item.count}}</span>
+                            <button type="button"  @click="cart_jian(item)"
+                                    class="btn btn-default btn-circle  text-uc my-btn wl_goshop_jian1"><i class="glyphicon glyphicon-minus"></i></button>
+                            <input type="text" class="wl_shop_num" style="width: 20px"  v-bind:value="item.count" >
+                            <button type="button"  @click="cart_jia(item)" class="btn btn-default btn-circle  my-btn wl_goshop_jia1"><i class="glyphicon glyphicon-plus"></i></button>
+
+
+                    <!--删除按钮-->
+                            <button style="float: right" @click="wl_deletShop(item)" class="btn btn-info" type="button">删除</button>
+</div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <span style="float: left;color: red;font-weight: bold;font-size: 20px;">共计￥{{sumPrice.zhi}}</span>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" @click="wl_buygo()" class="btn btn-primary">
+                                确认下订单
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+
+
+
+            <!-- 商品详情模态框（Modal） -->
+            <div class="modal fade" id="shop_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" >
+                                商品详情
+                            </h4>
+                        </div>
+                        <div style="width: 100px" class="center-block">
+                            <img  width="200px" v-bind:src="shop_info.img" class="" style="margin-left:-50px"/>
+
+                        </div>
+                        <div class="modal-body">
+                            {{shop_info.name}}
+                        </div>
+                        <!-- <div class="modal-footer">
+
+                        </div> -->
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <div class="row">
+                <nav class="col-sm-3" id="myScrollspy">
+                    <div class="container-fluid">
+                        <div class="container-fluid">
+                            <ul class="nav nav-pills nav-stacked" id="wl_goshop_nav">
+                                <!-- <li class="active"><a href="#section1">热销</a></li> -->
+                                <li v-for="(item,index) in type"><a v-bind:href="'#section'+index">{{item.name}}</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <!-- 这边就是菜品的滑动了 -->
+                <div id="wl_goshop_content" class=" wl_goshop_content">
+
+                    <div :id="'section'+index" v-if="1>=1"  v-for="(item,index) in type">
+                        <h4>{{item.name}}</h4>
+                        <div class="weui-panel__bd">
+
+                            <li href="javascript:void(0);"   class="weui-media-box weui-media-box_appmsg" v-for="(itemtwo,index) in shop" v-if="itemtwo.pid==item.id" >
+                                <div class="weui-media-box__hd" style="width:40px;">
+                                    <img width="10px" class="weui-media-box__thumb" v-bind:src="itemtwo.img"  alt="">
+                                </div>
+                                <div class="weui-media-box__bd" @click="wl_shop_info(itemtwo)">
+                                    <h4 class="weui-media-box__title">{{itemtwo.name}}
+                                        <span style="color: red;font-size: 12px;">￥{{itemtwo.price}}</span></h4>
+                                    <p class="weui-media-box__desc">。星球有一定的形状，有自己的运行轨道。</p>
+
+
+
+                                </div>
+                                <p style="font-size: 12px;" class="wl_goshop_jia items">
+
+
+                                    <button type="button"  @click="wl_jian(itemtwo)"
+                                            class="btn btn-default btn-circle  text-uc my-btn wl_goshop_jian1"><i class="glyphicon glyphicon-minus"></i></button>
+                                    <input type="text" class="wl_shop_num"  v-bind:value="itemtwo.cartcount" >
+                                    <button type="button"  @click="wl_jia(itemtwo)" class="btn btn-default btn-circle  my-btn wl_goshop_jia1"><i class="glyphicon glyphicon-plus"></i></button>
+
+
+
+
+                                    <!--<span  class="glyphicon glyphicon-minus btn btn-info"></span>-->
+                                    <!--<input type="text">-->
+                                    <!--<span class="glyphicon glyphicon-plus btn btn-info" ></span>-->
+
+                                </p>
+                            </li>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+    <!--特就是购物车的那个Logo-->
+
+
+    <div  id="wl_goshop_cart" class="container">
+
+        <!--<img class="cart" src="assets/images/cart.jpg" alt="Cart" />-->
+        <span style="font-size: 40px" data-target="#myModal" data-toggle="modal"
+              class="cart glyphicon glyphicon-shopping-cart"></span>
+        <!--<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">123</button>-->
+        <span style="font-size: 10px;color: white;background-color: red" class="badge" id="count">0</span>
+
+    </div>
+    <!-- 隐藏的商品详情按钮          -->
+    <span data-target="#shop_info" style="display: none;" data-toggle="modal" id="u"></span>
+
+    <!-- 微信隐藏的按钮 -->
+    <div class="page__bd page__bd_spacing" style="display: none;">
+        <a href="javascript:;" class="weui-btn weui-btn_default" id="showToast">成功提示</a>
+
+    </div>
+
+    <!-- //定义的微信弹框 -->
+    <div id="toast" style="display: none;height: 30px;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-icon_msg-primary">×</i>
+            <p class="weui-toast__content">不可再少了</p>
+        </div>
+    </div>
+
+
+    <!-- 保护VUe -->
+</div>
+<!-- 开头VUe -->
+
+
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/flyto.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script>
+    //这个就是购物车跳一跳
+    $('.items').flyto({
+        item      : 'li',
+        target    : '.cart',
+        button    : '.my-btn',
+//                shake: true
+    });
+
+</script>
+</body>
+<script type="text/javascript" src="js/indexVue.js"></script>
+<script type="text/javascript" src="js/indexAction.js"></script>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/example.css"/>
+
+
+    <script src="js/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+
+<div class="weui-msg">
+    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+    <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title" id="content">请先登陆</h2>
+    <p class="weui-msg__desc" ><span id="time"></span><span id="go_content">秒自动跳转个人中心</span></p>
+    </div>
+    <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+            <a href="javascript:" class="weui-btn weui-btn_primary">登陆</a>
+
+        </p>
+    </div></div>
+
+<script>
+
+$(function(){
+	//请求用户的订单先获取这个订单的URL
+	var url = location.search; //获取url中"?"符后的字串  
+		   var theRequest = new Object();  
+		   if (url.indexOf("?") != -1) {  
+		      var str = url.substr(1);  
+		      strs = str.split("&");  
+		      for(var i = 0; i < strs.length; i ++) {  
+		         theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);  
+		      }  
+		   }  
+		   console.log(theRequest.message); 
+
+				var info=theRequest.message;
+			
+				if(info==1){
+					$("#content").html("请先登陆");	
+					$("#go_content").html("秒自动跳转登陆");
+					wl_go("login.html");
+				}else if(info==2){
+					$("#content").html("登陆成功!");
+					$("#go_content").html("秒自动跳转个人中心");
+					wl_go("UserInfo.html");
+				}else{
+					$("#content").html("系统错误!");
+					$("#go_content").html("秒自动跳转首页");
+					wl_go("index.html");
+				}
+				
+	
+			
+	
+})
+
+//地址跳转的公共方法
+function wl_go(address){
+	var i=3;
+    var timer = window.setInterval(function () {
+        i--;
+        if(i<=0){
+            location.href=address;
+        }
+        $("#time").html(i);
+
+
+    },1000);
+}
+
+</script>
+
+</body>
+</html>

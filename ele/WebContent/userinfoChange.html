@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>信息修改</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+
+	<link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/example.css"/>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://hovertree.com/texiao/mobile/5/hovertreebottom.css" media="all">
+    <link href="css/amazeui.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/check.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header data-am-widget="header" style="background-color: #0a628f" class="am-header am-header-default sq-head ">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:history.back()" class="">
+            <i><img src="images/arow.png"/></i>
+        </a>
+    </div>
+    <h1 class="am-header-title">
+        <a href="" class="">个人资料</a>
+    </h1>
+</header>
+
+<div id="fuck_vue">
+ 
+
+<div style="height: 49px;"></div>
+<ul class="safty">
+    <li>
+        <a href="">
+            <i style="margin-top: 25px;">头像<p id="img" hidden>{{img}}</p></i>
+           
+                         <li>
+			  <a href="javascript:void(0)" @click="_wladd(1)" >
+    		<img id="touPicture1"
+
+
+            style="width: 100px;height: 100px;overflow:hidden;"
+			
+
+             v-bind:src="'http://tp.wlphp.cn'+userinfo.img" class="user-image" alt="User Image">
+
+    		</a>
+		
+    			
+    			<input type='file'  accept='image/*' name='file1'  id='file1' style='display: none'/>
+		</li>
+           
+        </a>
+       
+    </li>
+    <li>
+        <span>
+            <i>昵称</i>
+            <i class="infor-tele" style="float: right;"><input id="name" type="text"  v-bind:value="userinfo.name"/></i>
+        </span>
+    </li>
+    <li>
+        <span>
+            <i>性别</i>
+            
+		        
+            
+             <select v-if="man" style="margin-left:100px;" name="select2" id="sex">
+            	    	<option value="男">男</option>
+                        <option value="女">女</option>
+                
+            </select>
+            
+            
+            <select v-if="girl" style="margin-left:100px;" name="select2" id="sex">
+            	    	<option value="男">男</option>
+                        <option value="女" selected>女</option>
+                
+            </select>
+                   
+        </span>
+    </li>
+ 
+</ul>
+
+ 			<div class="weui-btn-area" id="ok">
+                <button type="button" @click="wl_go()" class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</button>
+            </div>
+             <div class="weui-btn-area" hidden id="waitBtn">
+               
+                <a   href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_default"><i class="weui-loading"></i>请等待图片上传完成</a>
+            </div>
+            
+           
+<!--//VUe-->
+</div>
+
+</body>
+
+<script src="js/zepto.min.js"></script>
+<script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
+<script src="js/weui.min.js"></script>
+<script src="http://hovertree.com/texiao/mobile/5/hovertreebottom.js"></script>
+<script src="js/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+	var app=new Vue({
+		el:"#fuck_vue",
+		data:{
+			"name":"",
+			"photo":"",
+			"phone":"",
+			"gender":"",
+			"user_id":"",
+			"img":"123",
+			userinfo:[],
+			"man":false,
+			"girl":false
+			
+			
+		},
+		
+		
+		methods:{
+			
+			wl_go(){
+				var gender=$("#sex").val();
+				var name=$("#name").val();
+				var img=$("#img").html();
+
+				console.log(img);
+				if(img=="123"){
+					img=$("#touPicture1").attr("src");
+					
+					img=img.substring(18);
+					img="."+img;
+					
+				}
+				axios.post("UserServlet?opr=changeInfo&name="+name+
+						"&photo="+img+
+						"&phone="+this.userinfo.phone+
+						"&gender="+gender+
+						"&id="+this.user_id
+						
+				).then(response=>{
+					var status= response.data.status;
+					if(status==1){
+						location.href="message.html?message=3";
+						
+					}else{
+						location.href="error.html?message=1";
+					}
+				}).catch(function (error) {
+// 					location.href="error.html?message=1";
+// 				    console.log(error);
+// 				    return;
+				  });
+			},_wladd(eve){
+             	// alert(eve);
+             	$("#file"+eve+"").click();
+             	var id= $("#touPicture"+eve+"").attr("id");
+             	// alert(id);
+             	
+             	 $("#file1").change(function(){
+                             var file = $('#file1').get(0).files[0];
+
+                             //创建用来读取此文件的对象
+                             var reader = new FileReader();
+                             //使用该对象读取file文件
+                             reader.readAsDataURL(file);
+                             //读取文件成功后执行的方法函数
+                             reader.onload=function(e){
+                                 //读取成功后返回的一个参数e，整个的一个进度事件
+//                                  console.log(e);
+                                 //选择所要显示图片的img，要赋值给img的src就是e中target下result里面
+                                 //的base64编码格式的地址
+                                 $('#touPicture1').get(0).src = e.target.result;
+                             }
+                             
+                             //选择了之后开始图品的ajax
+             				                var imgpath;
+             				　　//formdata储存异步上传数据
+             				//此处必要注意的点,append的键不能是一样的不然直接GG,傻逼一样的报错
+             				 var formData = new FormData($('form')[0]);
+             				 formData.append('file1',$('#file1')[0].files[0]);
+             				$("#ok").hide();
+            				$("#waitBtn").show();
+                             $.ajax({
+                             	
+                             	url:'http://tp.wlphp.cn/admin.php/home/type/fileAddAction',
+                             	  type: 'POST',
+                             	  
+                             	  data: formData,
+                             	 
+                             	  //这两个设置项必填
+                             	  contentType: false,
+                             	  processData: false,
+                             	  success:function(data){
+                             		 $("#ok").show();
+                     				$("#waitBtn").hide();
+                             	   console.log(data);
+//                              	  var srcPath = data;
+//                              	  // console.log(data.path);
+//                              	  // console.log(data.name);
+                             	  var obj =JSON.parse(data);
+             					   var img=obj[0]["path"];
+             					   imgpath=img;
+              						this.img=imgpath;
+              						console.log(this.img);
+              						$("#img").html(imgpath);
+                             	  },error:function (XMLHttpRequest, textStatus, errorThrown) 
+                             	  { 
+                             		console.log(XMLHttpRequest);
+                             		console.log(textStatus);
+                             		console.log(errorThrown);
+                             	  }
+        	
+                             	
+                             })
+		
+                  })
+
+             }
+		},
+		mounted() {
+//         	console.log(imgpath);
+        	
+        	//先获取一个用户的Session
+        	//如果没有存的话就跳到登陆页面
+        	
+        	//先获取一个用户的Session
+        	//如果没有存的话就跳到登陆页面
+        	axios.post("LoginServlet?type=getSession").then(response=>{
+        		var user_id=response.data.user_id;
+        		if(user_id==null || user_id==0 ||user_id<1){
+        			return;
+        			
+        		}else{
+        			this.user_id=user_id;
+        			axios.post("UserServlet?opr=getInfo&user_id="+user_id).then(eve=>{
+        				console.log(eve.data.info);
+        				var data=eve.data.info;
+        				var img1=data.user_photo;
+        				img1= img1.substring(1);
+        				console.log(img1);
+        				 var temp={"gender":data.user_gender,phone:data.user_phoneNo,img:img1,name:data.user_name};
+        				 this.userinfo=temp;
+        				 console.log(this.userinfo.gender);
+        				 if(this.userinfo.gender == "男"){
+        					 this.man=true;
+        				 }else{
+        					 this.girl=true;
+        				 }
+        				
+        			}).catch(function (error) {
+        				location.href="error.html?message=1123";
+        			    console.log(error);
+        			    return;
+        			  });
+        		}
+       
+        			
+        	}).catch(function (error) {
+				location.href="error.html?message=1";
+			    console.log(error);
+			    return;
+			  });
+        	
+        	
+        	 
+        	
+        
+        },
+		
+		
+		
+	})
+
+
+</script>
+
+</html>

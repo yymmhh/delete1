@@ -1,0 +1,133 @@
+.wl_index_head{
+	  background-color: #3492EA;
+}
+
+.wl_souce{
+	margin-top: 10px;
+}
+
+.wl_img_size{
+	width: 200px;
+	height: 200px;
+	
+}
+
+.wl_goshop_logo img{
+	/*border: 1px solid red;*/
+	height: 100px;
+	width: 100px;
+}
+
+.wl_goshop_header{
+	/*border: 1px solid red;*/
+	height: 150px;
+}
+
+.wl_goshop_title{
+	margin-left: 40px;
+}
+
+.container{
+	/*margin-top: 20px;*/
+}
+.wl_goshop_left{
+/*border: 1px solid red;*/
+
+
+margin-left:-30px;
+margin-top: 10px;
+
+}
+
+
+/*左边栏的长度*/
+.nav-stacked{
+	width: 40px;
+	font-size: 10px;
+	/*margin-left: -200px;*/
+	/*border: 10px solid yellow;*/
+}
+.nav-stacked li{
+	/*border:  3px solid red;*/
+	border-bottom:1px solid #C0C0C0;
+}
+
+/*左侧定位停止*/
+
+	.wl_goshop_leftstop{
+			/* margin-top: -30px; */
+			position: fixed;
+			
+
+	}
+
+	.wl_goshop_leftStopTop{
+		top:-30px;
+		left: 10px;
+		/*margin-top: -330px;*/
+		padding-top: 85px;
+		margin-left: -20px;
+/* 		border: 2px solid red; */
+		left:20px;
+	}
+
+
+
+/*这是右侧的内容*/
+.wl_goshop_content{
+	margin-top: -70%;
+	margin-left: -60px;
+	font-size: 11px;
+}
+
+/*往下滑*/
+.wl_goshop_contentStop{
+	margin-top: 0px;
+
+}
+
+
+
+.wl_goshop_top{
+	 width:100%;
+	position:fixed; 
+z-index:1;
+top:0; 
+}
+
+
+.wl_goshop_jia{
+
+	/*border: 1px solid red;*/
+}
+.wl_goshop_jia input{
+	width: 30px;
+}
+
+.wl_goshop_jia_clearBorder{
+
+}
+
+
+#wl_goshop_cart{
+	position:fixed;
+	/*background:#eee;*/
+	/*bottom:300px;*/
+	top:500px;
+	right:-300px;
+	width:100px;
+	height:50px;
+	/*border: 1px solid red;*/
+	/*background-color: #0a6999;*/
+
+}
+
+.wl_goshop_dixia section{
+	/*border: 3px solid green;*/
+	margin-top: 700px;
+}
+
+.wl_goshop_select{
+	/*border: 3px solid yellow;*/
+	margin-top: 100px;
+}
